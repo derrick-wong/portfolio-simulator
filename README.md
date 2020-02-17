@@ -33,12 +33,6 @@ value of 103.5 is equivalent to 100 at Year 0.
 10% Best Case: 90​ Percentile value among the 10,000 simulations 
 10% Worst Case: 10​ Percentile value among the 10,000 simulations.
 
-### Hint
-To test your results create an account with Personal Capital, add a manual portfolio and go to Investment Checkup and compare your results.
-
-### Delivery
-Please create a public github repo and check-in your code there.
-
 # Project Setup
 ## IntelliJ
 Run following command in Terminal before importing.
