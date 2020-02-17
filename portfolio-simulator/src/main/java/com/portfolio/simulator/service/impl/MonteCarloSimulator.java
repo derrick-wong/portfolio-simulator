@@ -28,12 +28,14 @@ public class MonteCarloSimulator implements Simulator {
     if (!isValidPortfolio(portfolio) || !isValidSimulationParams(params)) {
       throw new InvalidSimulationParamsException(INVALID_PARAMS_MSG);
     }
-    TargetAllocation targetAllocation = portfolio.getTargetAllocation();
-    HashMap<Integer, List<BigDecimal>> monteCarloSimulationResults = new HashMap<>();
 
+    HashMap<Integer, List<BigDecimal>> monteCarloSimulationResults = new HashMap<>();
     for (int sim = 0; sim < params.getNumOfSimulations(); sim++) {
       List<BigDecimal> simulatedReturns = simulateYearlyReturns(
-        targetAllocation, portfolio.getBalance(), params.getInflationRate(), params.getYearsToForecast());
+        portfolio.getTargetAllocation(),
+        portfolio.getBalance(),
+        params.getInflationRate(),
+        params.getYearsToForecast());
       monteCarloSimulationResults.put(sim, simulatedReturns);
     }
 
