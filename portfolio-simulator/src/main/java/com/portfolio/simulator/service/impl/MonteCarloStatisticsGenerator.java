@@ -18,7 +18,10 @@ public class MonteCarloStatisticsGenerator implements StatsGenerator<BigDecimal,
   @Override
   public BigDecimal calcPercentile(double percent, int year, SimulationResult simulationResult)
     throws InvalidStatsGenerationParamsException {
-    if (simulationResult == null || isMapEmptyOrNull(simulationResult.getProjectionResults())) {
+    if (simulationResult == null
+      || isMapEmptyOrNull(simulationResult.getProjectionResults())
+      || percent < 0 || percent > 1
+      || year < 0) {
       throw new InvalidStatsGenerationParamsException(INVALID_PARAMS_MSG);
     }
     BigDecimal[] filteredResults = ResultsUtil.retrieveResultsByYear(simulationResult.getProjectionResults(), year);

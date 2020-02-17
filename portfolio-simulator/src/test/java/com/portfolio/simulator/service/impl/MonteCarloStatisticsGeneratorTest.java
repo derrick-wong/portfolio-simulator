@@ -35,6 +35,36 @@ public class MonteCarloStatisticsGeneratorTest {
   }
 
   @Test
+  public void shouldThrowInvalidStatsGenerationParamsExceptionWhenPercentIsLessThan0() {
+
+    Exception exception = assertThrows(InvalidStatsGenerationParamsException.class, () ->
+      monteCarloStatisticsGenerator.calcPercentile(-1,1, null));
+
+    assertThat(exception.getClass(), is(InvalidStatsGenerationParamsException.class));
+    assertThat(exception.getMessage(), is("Invalid simulation results or year - cannot generate statistics"));
+  }
+
+  @Test
+  public void shouldThrowInvalidStatsGenerationParamsExceptionWhenPercentIsGreaterThan1() {
+
+    Exception exception = assertThrows(InvalidStatsGenerationParamsException.class, () ->
+      monteCarloStatisticsGenerator.calcPercentile(2,1, null));
+
+    assertThat(exception.getClass(), is(InvalidStatsGenerationParamsException.class));
+    assertThat(exception.getMessage(), is("Invalid simulation results or year - cannot generate statistics"));
+  }
+
+  @Test
+  public void shouldThrowInvalidStatsGenerationParamsExceptionWhenYearIsLessThan0() {
+
+    Exception exception = assertThrows(InvalidStatsGenerationParamsException.class, () ->
+      monteCarloStatisticsGenerator.calcPercentile(0,-1, null));
+
+    assertThat(exception.getClass(), is(InvalidStatsGenerationParamsException.class));
+    assertThat(exception.getMessage(), is("Invalid simulation results or year - cannot generate statistics"));
+  }
+
+  @Test
   public void shouldThrowInvalidStatsGenerationParamsExceptionWhenProjectResultsAreNullOrEmpty() {
     SimulationResult nullProjectionResults = SimulationResult.builder().build();
     SimulationResult emptyProjectionResults = SimulationResult.builder()

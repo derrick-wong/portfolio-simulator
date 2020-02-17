@@ -57,7 +57,30 @@ The `portfolio-simulator` default generated artifact path is located at `$ROOT_P
 To use locally generated artifact, copy artifact to the project's destination folder (e.g.: `$OTHER_PROJ/libs/`), then add the following dependency via Gradle:
 ```
 dependencies {
-    implementation files("/libs/portfolio-simulator-${version}.jar")
+    implementation files("libs/portfolio-simulator-${version}.jar")
+}
+```
+
+Sample implementation:
+```
+public class DemoApplication {
+
+  public static void main(String[] args) throws Exception{
+
+    Portfolio portfolio = new Portfolio(PortfolioType.AGGRESSIVE, BigDecimal.valueOf(100000.00));
+    SimulationParams simulationParams = SimulationParams.builder()
+      .numOfSimulations(10000)
+      .yearsToForecast(20)
+      .inflationRate(BigDecimal.valueOf(0.035))
+      .build();
+
+    Simulator monteCarloSimulator = new MonteCarloSimulator();
+    SimulationResult simulationResult = monteCarloSimulator.run(portfolio, simulationParams);
+
+    StatsGenerator<BigDecimal, SimulationResult> monteCarloStatsGenerator = new MonteCarloStatisticsGenerator();
+    BigDecimal percentile = monteCarloStatsGenerator.calcPercentile(0.5, 20, simulationResult);
+    System.out.println(percentile.setScale(2, RoundingMode.HALF_EVEN));
+  }
 }
 ```
 
