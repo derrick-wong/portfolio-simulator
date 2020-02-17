@@ -1,1 +1,3 @@
-rootProject.name = 'portfolio-simulator'
+rootProject.name = 'portfolio-simulator-root'
+include 'portfolio-simulator'
+include 'integration-tests'

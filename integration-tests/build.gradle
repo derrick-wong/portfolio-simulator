@@ -1,0 +1,35 @@
+plugins {
+  id 'org.springframework.boot' version '2.2.4.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+configurations {
+  cucumberRuntime {
+    extendsFrom testImplementation
+  }
+}
+
+dependencies {
+  compile project(':portfolio-simulator')
+
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+  testImplementation 'io.cucumber:cucumber-java8:5.1.3'
+  testImplementation 'io.cucumber:cucumber-junit:5.1.3'
+}
+
+bootJar {
+  enabled = false;
+}
+
+task featureTests() {
+  dependsOn assemble, compileTestJava
+  doLast {
+    javaexec {
+      main = "io.cucumber.core.cli.Main"
+      classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+      args = ['--plugin', 'pretty', '--glue', 'com.portfolio.simulator.cucumber.steps', 'src/test/resources/features']
+    }
+  }
+}

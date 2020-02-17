@@ -33,8 +33,9 @@ public class MonteCarloSimulator implements Simulator {
 
     for (int sim = 0; sim < params.getNumOfSimulations(); sim++) {
       BigDecimal randomInterestRate = BigDecimal.valueOf(
-        random.nextGaussian() * targetAllocation.getHistoricalRisk().doubleValue()
-          + targetAllocation.getHistoricalReturn().doubleValue());
+        random.nextGaussian())
+        .multiply(targetAllocation.getHistoricalRisk())
+        .add(targetAllocation.getHistoricalReturn());
 
       List<BigDecimal> simulatedReturns = simulateYearlyReturns(
         randomInterestRate, portfolio.getBalance(), params.getInflationRate(), params.getYearsToForecast());
@@ -55,11 +56,10 @@ public class MonteCarloSimulator implements Simulator {
     simulatedReturns.add(INITIAL_YEAR, principal);
 
     for (int year = 1; year < yearsToForecast; year++) {
-      BigDecimal previousYearBalance = simulatedReturns.get(year - 1);
-      BigDecimal normInterestRate = interestRate.add(BigDecimal.ONE);
-      BigDecimal normInflationRate = BigDecimal.ONE.subtract(inflationRate);
-      BigDecimal adjustedReturn = previousYearBalance.multiply(normInterestRate).multiply(normInflationRate);
-      simulatedReturns.add(year, adjustedReturn);
+      BigDecimal balance = simulatedReturns.get(year - 1);
+      balance = balance.multiply(BigDecimal.ONE.add(interestRate));
+      balance = balance.multiply(BigDecimal.ONE.subtract(inflationRate));
+      simulatedReturns.add(year, balance);
     }
     return simulatedReturns;
   }

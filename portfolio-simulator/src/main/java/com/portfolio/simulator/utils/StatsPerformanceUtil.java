@@ -7,7 +7,7 @@ public final class StatsPerformanceUtil {
 
   public static BigDecimal derivePercentile(BigDecimal[] values, double percentile) {
     Arrays.sort(values);
-    double index = values.length * percentile;
-    return values[(int) Math.ceil(index) - 1];
+    int index = (int) Math.ceil(values.length * percentile);
+    return values[index - 1];
   }
 }
