@@ -24,8 +24,8 @@ value of 103.5 is equivalent to 100 at Year 0.
 
 | Portfolio Type | Median 20th​ Year | 10 % Best Case | 10 % Worst Case |
 |----------------|------------------|----------------|-----------------|
-| A - Aggressive |                  |                |                 |
-| I - Very Conservative |           |                |                 |
+| A - Aggressive |  $231,666.44     |   $516,893.45  |   $99,690.55    |
+| I - Very Conservative |$153,684.07|   $214,687.48  |   $109,475.12   |
 
 
 ### Description
