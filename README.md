@@ -47,7 +47,7 @@ Run following command in Terminal (below commands are using log-level: INFO).
 ```
 or
 ```
-./gradlew clean test build --info
+./gradlew clean test build featureTests --info
 ```
 
 ### Artifact Details
